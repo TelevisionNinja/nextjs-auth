@@ -1,0 +1,19 @@
+services:
+  # db:
+  #   image: postgres:latest
+  #   environment:
+  #     POSTGRES_DB: 
+  #     POSTGRES_USER: 
+  #     POSTGRES_PASSWORD: 
+
+  nextjs-auth:
+    build: .
+    develop:
+      watch:
+        - action: sync+restart
+          path: .
+          target: /nextjs-auth
+    # retart until db started
+    restart: on-failure
+    ports:
+      - "3000:3000"
