@@ -1,4 +1,4 @@
-import 'server-only'
+import 'server-only';
 
 import { DatabaseSync } from 'node:sqlite';
 import crypto from "node:crypto"
@@ -33,31 +33,31 @@ export function extendSession(id) {
   updateStatement.run(timeNow.toISOString(), id);
 }
 
-export function updateSession(id, expirationLength = 30 * 60 * 1000) {
-  const result = getSession(id);
-
-  if (!result) {
-    return null;
+function updateSession(user, expirationLength = 30 * 60 * 1000) {
+  if (!user) {
+    return user;
   }
 
-  const timestamp = new Date(result.timestamp).getTime();
+  const timestamp = new Date(user.timestamp).getTime();
   const timeDiff = Date.now() - timestamp;
 
   // expired
   if (timeDiff > expirationLength) {
-    deleteSession(result.id);
+    deleteSession(user.id);
     return null;
   }
 
   // session is valid, update timestamp to extend expiration
-  extendSession(result.id);
+  extendSession(user.id);
 
-  return result;
+  return user;
 }
 
-export function getSession(id) {
+export function getSession(id, expirationLength = 30 * 60 * 1000) {
   const statement = sessionDB.prepare('SELECT * FROM sessions WHERE id = ?');
-  return statement.get(id);
+  const result = statement.get(id);
+
+  return updateSession(result, expirationLength);
 }
 
 const database = new DatabaseSync('/database.sqlite');

@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { getUserFromSession, updateUserSession } from "./session";
+import { getUserFromSession } from "./session";
 import { redirect } from "next/navigation";
 
 export async function accessCheck(type) {
@@ -10,15 +10,11 @@ export async function accessCheck(type) {
     const isPrivateRoute = type === "private";
 
     const cookieStore = await cookies();
-
-    // await updateUserSession(cookieStore);
+    const user = await getUserFromSession(cookieStore);
 
     if (isPublicRoute) {
         return;
     }
-
-    // 3. Decrypt the session from the cookie
-    const user = await getUserFromSession(cookieStore);
 
     if (!user) {
         redirect("/sign-in");
