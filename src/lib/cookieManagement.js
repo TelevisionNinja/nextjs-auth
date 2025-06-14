@@ -5,8 +5,7 @@ import { SignJWT, jwtVerify } from 'jose';
 export const SESSION_EXPIRATION = 30 * 60 * 1000; // 30 mins
 export const COOKIE_SESSION_KEY = "session";
 
-const secretKey = process.env.SESSION_SECRET;
-const encodedKey = new TextEncoder().encode(secretKey);
+const encodedKey = new TextEncoder().encode(process.env.SESSION_SECRET);
 
 async function encrypt(payload) {
   return new SignJWT(payload)
