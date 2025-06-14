@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { accessCheck } from "../lib/access";
 
 export default async function HomePage() {
-  await accessCheck("public"); // also updates cookies
+  await accessCheck("public"); // also updates the session
   const fullUser = await getUserFromSession(await cookies());
 
   return (
