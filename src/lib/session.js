@@ -55,7 +55,8 @@ export async function createUserSession(email, cookies) {
   // create a session in the database and return the session ID
   const sessionId = createSession(email);
 
-  await setCookie(sessionId, cookies);
+  // info such as email and role are not included so that the up to date info can be checked on access time
+  await setCookie({ sessionId: sessionId }, cookies);
 }
 
 export async function deleteUserSession(cookies) {

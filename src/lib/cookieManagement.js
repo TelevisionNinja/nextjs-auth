@@ -27,11 +27,16 @@ export async function decrypt(session) {
   }
 }
 
-export async function setCookie(sessionId, cookies) {
+/**
+ * 
+ * @param {*} sessionInfo { sessionId }
+ * @param {*} cookies 
+ */
+export async function setCookie(sessionInfo, cookies) {
   const expiresAt = new Date(Date.now() + SESSION_EXPIRATION);
 
   // 2. Encrypt the session ID
-  const session = await encrypt({ sessionId });
+  const session = await encrypt(sessionInfo);
  
   // 3. Store the session in cookies for optimistic auth checks
   cookies.set(COOKIE_SESSION_KEY, session, {
@@ -50,5 +55,5 @@ export async function updateCookie(cookies) {
     return;
   }
 
-  await setCookie(sessionId.sessionId, cookies);
+  await setCookie(sessionId, cookies);
 }
