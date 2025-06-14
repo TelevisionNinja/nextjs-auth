@@ -1,11 +1,8 @@
-import { getUserFromSession } from "../../lib/session";
-import { cookies } from "next/headers";
-import { accessCheck } from "../../lib/access";
+import { verifySession } from "../../lib/dal";
 import "./globals.css";
 
 export default async function PrivatePage() {
-  await accessCheck("private");
-  const currentUser = await getUserFromSession(await cookies());
+  const currentUser = await verifySession();
 
   return (
     <div className="container">

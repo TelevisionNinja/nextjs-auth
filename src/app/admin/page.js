@@ -1,11 +1,8 @@
-import { getUserFromSession } from "../../lib/session";
-import { accessCheck } from "../../lib/access";
-import { cookies } from "next/headers";
+import { verifySession } from "../../lib/dal";
 import "./globals.css";
 
 export default async function AdminPage() {
-  await accessCheck("admin");
-  const currentUser = await getUserFromSession(await cookies());
+  const currentUser = await verifySession("admin");
 
   return (
     <div className="container">
