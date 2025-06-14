@@ -50,7 +50,7 @@ export async function signUp(unsafeDataObject) {
 
   const existingUser = getUser(data.email);
 
-  if (existingUser) return "Account already exists for this email";
+  if (existingUser) return "Unable to create account";
 
   try {
     const salt = await generateSalt();
