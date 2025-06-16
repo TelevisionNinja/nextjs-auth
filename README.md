@@ -1,6 +1,11 @@
 # nextjs-auth
 Basic authentication in Next.js
 
+## Create SSL Certificate
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./nginx/nextjsauth.key -out ./nginx/nextjsauth.crt
+```
+
 ## Docker or Podman
 
 ### Podman
