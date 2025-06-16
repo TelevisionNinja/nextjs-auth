@@ -7,7 +7,9 @@ services:
   #     POSTGRES_PASSWORD: 
 
   nextjs-auth:
-    build: .
+    build:
+      context: ./
+      dockerfile: nextjs.Dockerfile
     develop:
       watch:
         - action: sync+restart
@@ -17,3 +19,17 @@ services:
     restart: on-failure
     ports:
       - "3000:3000"
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: nginx.Dockerfile
+    restart: on-failure
+    ports:
+      - "8080:80"
+      - "4430:443"
+    # volumes:
+    #   - ./nginx:/etc/nginx/ssl:ro
+    depends_on:
+      nextjs-auth:
+        condition: service_started
