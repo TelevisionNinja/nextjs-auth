@@ -9,6 +9,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./nginx/nextjsauth.k
 ## Docker or Podman
 
 ### Podman
+Next.js only:
 ```bash
 podman build -t nextjs-auth_image .
 podman run --rm --replace -p 3000:3000 --name nextjs-auth_container nextjs-auth_image
@@ -16,6 +17,8 @@ podman run --rm --replace -p 3000:3000 --name nextjs-auth_container nextjs-auth_
 ```bash
 podman run --rm --privileged -v ./:/testSite --replace -it --name nextjs-auth_container nextjs-auth_image sh
 ```
+
+Next.js with Nginx for TLS:
 ```bash
 podman compose up --watch
 ```
