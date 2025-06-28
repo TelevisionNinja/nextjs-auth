@@ -17,8 +17,6 @@ services:
           target: /nextjs-auth
     # retart until db started
     restart: on-failure
-    ports:
-      - "3000:3000"
 
   nginx:
     build:
