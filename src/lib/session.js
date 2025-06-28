@@ -2,7 +2,6 @@ import 'server-only';
 
 import { createSession, deleteSession, getSession, getUser } from "./database";
 import { userInfoSchema } from "./definitions";
-import { cache } from "react";
 import { SESSION_EXPIRATION, COOKIE_SESSION_KEY, setCookie, decrypt } from "./cookieManagement";
 
 function deleteCookieAndSession(sessionId, cookies) {
@@ -10,7 +9,7 @@ function deleteCookieAndSession(sessionId, cookies) {
   cookies.delete(COOKIE_SESSION_KEY);
 }
 
-export const getUserFromSession = cache(async cookies => {
+export async function getUserFromSession(cookies) {
   const sessionId = await decrypt(cookies.get(COOKIE_SESSION_KEY)?.value);
 
   if (sessionId == null) {
@@ -36,7 +35,7 @@ export const getUserFromSession = cache(async cookies => {
   }
 
   return data;
-});
+}
 
 // export async function updateUserSession(cookies) {
 //   const sessionId = await decrypt(cookies.get(COOKIE_SESSION_KEY)?.value)

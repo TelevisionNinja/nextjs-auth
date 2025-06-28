@@ -2,14 +2,13 @@ import 'server-only';
 
 import { cookies } from 'next/headers';
 import { getUserFromSession } from "./session";
-import { cache } from "react";
 import { redirect } from "next/navigation";
 
 /**
  * role = null, allow any signed in user
  * role = string, allow only users with that role
  */
-export const verifySession = cache(async (role = null) => {
+export async function verifySession(role = null) {
     const user = await getUserFromSession(await cookies());
 
     if (!user) {
@@ -23,4 +22,4 @@ export const verifySession = cache(async (role = null) => {
 
     redirect('/sign-in');
     return null;
-});
+}
