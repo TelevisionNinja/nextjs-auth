@@ -7,12 +7,16 @@ import { redirect } from "next/navigation";
 /**
  * role = null, allow any signed in user
  * role = string, allow only users with that role
+ * isAPI = bool, if using to verify page visits, it will redirect unverified users
  */
-export async function verifySession(role = null) {
+export async function verifySession(role = null, isAPI = false) {
     const user = await getUserFromSession(await cookies());
 
     if (!user) {
-        redirect('/sign-in');
+        if (!isAPI) {
+            redirect('/sign-in');
+        }
+
         return null;
     }
 
@@ -20,6 +24,9 @@ export async function verifySession(role = null) {
         return user;
     }
 
-    redirect('/sign-in');
+    if (!isAPI) {
+        redirect('/sign-in');
+    }
+
     return null;
 }
