@@ -13,7 +13,8 @@
     "react-dom": "^19.0.0",
     "next": "15.3.2",
     "zod": "^3.25.42",
-    "jose": "^6.0.11"
+    "jose": "^6.0.11",
+    "react-select": "^5.10.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
